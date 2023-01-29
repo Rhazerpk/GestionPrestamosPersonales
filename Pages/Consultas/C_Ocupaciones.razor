@@ -1,0 +1,56 @@
+﻿@page "/consultas"
+@inject OcupacionesBLL ocupacionesBLL
+
+
+<EditForm Model="ocupaciones">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <DataAnnotationsValidator />
+    <div class="card">
+        <div class="card-header text-center">
+            <h3>Consulta Ocupaciones</h3>
+
+        </div>
+
+        <div class="card-body">
+            <form>
+                <div class="form-group text-center">
+
+                   <button type="button" class="bi bi-person-workspace btn btn-lg btn-info" @onclick="Buscar"> Ocupaciones</button>
+
+                </div>
+            </form>
+        </div>
+        <table class="table table-secondary">
+            <thead class="thead-dark">
+                <tr class="table-info">
+                    <th>OcupacionId</th>
+                    <th>Descripción</th>
+                    <th>Salario</th>
+                    <th>Ver</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ocupacion in ocupaciones)
+                {
+                    <tr>
+                        <td>@ocupacion.OcupacionId</td>
+                        <td>@ocupacion.Descripcion</td>
+                        <td>@ocupacion.Salario</td>
+                        <td><a href="ocupacion/@ocupacion.OcupacionId">Ver</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</EditForm>
+
+@code {
+
+    public Ocupaciones ocupacion { set; get; } = new Ocupaciones();
+    public List<Ocupaciones> ocupaciones { get; set; } = new List<Ocupaciones>();
+    public void Buscar()
+    {
+        ocupaciones = ocupacionesBLL.GetList(o => true);
+    }
+
+}
