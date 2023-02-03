@@ -6,6 +6,6 @@ public class Ocupaciones{
     public int OcupacionId{get;set;}
     [Required(ErrorMessage ="La descripción es requerida")]
     public string? Descripcion{get;set;}
-    public int Salario{get;set;}
+    public float Salario{get;set;}
     
 }

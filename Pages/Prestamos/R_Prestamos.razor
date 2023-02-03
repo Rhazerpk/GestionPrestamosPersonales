@@ -1,0 +1,150 @@
+﻿@page "/prestamo"
+@page "/prestamo/{PrestamoId:int}"
+
+@inject PrestamosBLL prestamosBll
+@inject PersonasBLL personasBll
+@inject OcupacionesBLL ocupacionesBll
+
+<EditForm Model="prestamos" OnValidSubmit="Guardar">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <DataAnnotationsValidator />
+    <div class="card">
+        <div class="card-header text-center">
+            <h3>Registro de Prestamos</h3>
+        </div>
+        <div class="card-header text-center">
+            <div class="container overflow-hidden">
+                <form class="row gy-3">
+
+                    
+                    <div class="form-row align-items-center">
+                        <div class="col"> 
+                            <label>PrestamoID</label>
+                            <div class="input-group">
+                                <InputNumber @bind-Value="prestamos.PrestamoId" class="form-control col-4" />
+                                <div class="input-group-append">
+                                    <button type="button" class="input-group-text btn btn-primary" @onclick="Buscar"> <i class="oi oi-magnifying-glass" /></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="col-md-4">
+                        <label class="form-label">Fecha de Inicio</label>
+                        <InputDate @bind-Value="prestamos.Fecha" class="form-control" />
+                        <ValidationMessage For="@(() => prestamos.Fecha)" />
+                    </div>
+
+                    
+                    <div class="col-md-4">
+                        <label class="form-label">Fecha de Vencimiento</label>
+                        <InputDate @bind-Value="prestamos.Vence" class="form-control" />
+                        <ValidationMessage For="@(() => prestamos.Vence)" />
+                    </div>
+
+                    
+                    <div class="col-md-4">
+                        <label for="personas.PersonaId" class="form-label">PersonaID</label>
+                        <InputNumber @bind-Value="prestamos.PersonaId" class="form-control" />
+                        <ValidationMessage For="@(() => prestamos.PersonaId)" />
+                    </div>
+            
+
+                    
+                    <div class="col-md-4">
+                        <label class="form-label">Concepto</label>
+                        <InputText @bind-Value="prestamos.Concepto" class="form-control" />
+                        <ValidationMessage For="@(() => prestamos.Concepto)" />
+                    </div>
+
+
+                    
+                    <div class="col-md-4">
+                        <label class="form-label">Monto</label>
+                        <InputNumber @bind-Value="prestamos.Monto" class="form-control" />
+                        <ValidationMessage For="@(() => prestamos.Monto)" />
+                    </div>
+
+                    
+                    <div class="col-md-4">
+                        <label class="form-label">Balance</label>
+                        <InputNumber @bind-Value="prestamos.Monto" class="form-control" />
+                        <ValidationMessage For="@(() => prestamos.Balance)" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card-footer d-flex justify-content-center">
+            <div class="border border-3 btn-group" role="group">
+                <button type="button" class="btn btn-primary" @onclick="Nuevo"> <i class="oi oi-file" /> Nuevo</button>
+                <button type="submit" class="btn btn-success" @onclick ="Guardar"><i class="oi oi-document" /> Guardar</button>
+                <button type="button" class="btn btn-danger" @onclick="Eliminar"><i class="oi oi-trash" />Eliminar</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public int PrestamoId {get; set;}
+    public int OcupacionId { get; set; }
+    public Prestamo prestamos {get; set;} = new Prestamo(); 
+    public Ocupaciones ocupacion { get; set; } = new Ocupaciones();
+    public List<Persona> listaPersonas = new List<Persona>();
+    
+    protected override void OnInitialized()
+    {
+        listaPersonas = prestamosBll.GetPersonas(c => true);
+        if (PrestamoId > 0)
+        {
+            this.prestamos.PrestamoId = PrestamoId;
+            this.Buscar();
+        }
+    }
+
+    private void Buscar()
+    {
+        if (prestamos.PrestamoId > 0 || ocupacion.OcupacionId > 0)
+        {
+            var encontrado = prestamosBll.Buscar(prestamos.PrestamoId);
+            if (encontrado != null)
+            {
+                this.prestamos = encontrado;
+               
+            }
+        }
+    }
+
+    public void Nuevo()
+    {
+        prestamos = new Prestamo();
+        prestamos.Fecha = DateTime.Now;
+        prestamos.Vence = DateTime.Now;
+        
+    }
+
+
+    public void Guardar()
+    {
+        var guardo = prestamosBll.Guardar(prestamos);
+        if (guardo)
+        {
+            Nuevo();
+            
+        }
+    }
+
+    public void Eliminar()
+    {
+        var elimino = prestamosBll.Eliminar(prestamos);
+        if (elimino)
+        {
+            Nuevo();
+            
+        }
+
+    }
+}

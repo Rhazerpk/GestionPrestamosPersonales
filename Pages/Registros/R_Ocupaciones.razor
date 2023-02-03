@@ -10,12 +10,15 @@
             <h3>Registro de Ocupaciones</h3>
         </div>
         
-            <div class="form-group">
+            <div class="form-row align-items-center">
                 <label>OcupacionID</label>
-                <InputNumber @bind-Value="ocupacion.OcupacionId" class="form-control" />
-                <button type="button" class="bi bi-search btn btn-primary input-group-text"  @onclick="Buscar" > Buscar </button>
-                <ValidationMessage For="@(() => ocupacion.OcupacionId)" />
-             </div>
+                 <div class="input-group">
+                    <InputNumber @bind-Value="ocupacion.OcupacionId" class="form-control col-4" />
+                    <div class="input-group-append">
+                        <button type="button" class="input-group-text btn btn-primary" @onclick="Buscar"> <i class="oi oi-magnifying-glass" /></button>
+                    </div>
+                </div>
+            </div>
             
             <div class="form-group">
                 <label>Descripción</label>
@@ -88,16 +91,10 @@
 
     public void Eliminar()
     {
-        bool eliminado = ocupacionesBll.Eliminar(ocupacion);
-
-        eliminado = false; 
-
-        if (eliminado)
+        var elimino = ocupacionesBll.Eliminar(ocupacion);
+        if (elimino)
         {
-            Nuevo();   
-        }
-        else
-        {
+            Nuevo();
             
         }
 

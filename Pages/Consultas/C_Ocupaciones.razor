@@ -1,5 +1,5 @@
-﻿@page "/consultas"
-@inject OcupacionesBLL ocupacionesBLL
+﻿@page "/C_ocupaciones"
+@inject OcupacionesBLL ocupacionesBll
 
 
 <EditForm Model="ocupaciones">
@@ -15,7 +15,7 @@
             <form>
                 <div class="form-group text-center">
 
-                   <button type="button" class="bi bi-person-workspace btn btn-lg btn-info" @onclick="Buscar"> Ocupaciones</button>
+                   <button type="button" class="bi bi-file-earmark-person btn btn-lg btn-primary" @onclick="Buscar"> Generar Tabla Ocupaciones</button>
 
                 </div>
             </form>
@@ -23,7 +23,7 @@
         <table class="table table-secondary">
             <thead class="thead-dark">
                 <tr class="table-info">
-                    <th>OcupacionId</th>
+                    <th>OcupacionID</th>
                     <th>Descripción</th>
                     <th>Salario</th>
                     <th>Ver</th>
@@ -50,7 +50,7 @@
     public List<Ocupaciones> ocupaciones { get; set; } = new List<Ocupaciones>();
     public void Buscar()
     {
-        ocupaciones = ocupacionesBLL.GetList(o => true);
+        ocupaciones = ocupacionesBll.GetList(o => true);
     }
 
 }

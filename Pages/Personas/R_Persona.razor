@@ -1,0 +1,156 @@
+﻿@page "/persona"
+@page "/persona/{PersonaId:int}"
+
+@inject PersonasBLL personasBll
+@inject OcupacionesBLL ocupacionesBll
+
+<EditForm Model="personas" OnValidSubmit="Guardar">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <DataAnnotationsValidator />
+    <div class="card">
+        <div class="card-header text-center">
+            <h3>Registro de Personas</h3>
+        </div>
+        
+        
+            <div class="form-row align-items-center">
+                <label>PersonaID</label>
+                 <div class="input-group">
+                    <InputNumber @bind-Value="personas.PersonaId" class="form-control col-4" />
+                    <div class="input-group-append">
+                        <button type="button" class="input-group-text btn btn-primary" @onclick="Buscar"> <i class="oi oi-magnifying-glass" /></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Nombres</label>
+                <InputText @bind-Value="personas.Nombres" class="form-control" />
+                <ValidationMessage For="@(() => personas.Nombres)" />
+            </div>
+
+            <div class="form-group">
+                <label>Teléfono</label>
+                <InputText @bind-Value="personas.Telefono" class="form-control" />
+                <ValidationMessage For="@(() => personas.Telefono)" />
+            </div>
+
+
+             <div class="form-group">
+                <label>Celular</label>
+                <InputText @bind-Value="personas.Celular" class="form-control" />
+                <ValidationMessage For="@(() => personas.Celular)" />
+            </div>
+
+             <div class="form-group">
+                <label>Email</label>
+                <InputText @bind-Value="personas.Email" class="form-control" />
+                <ValidationMessage For="@(() => personas.Email)" />
+            </div>
+
+             <div class="form-group">
+                <label>Dirección</label>
+                <InputText @bind-Value="personas.Direccion" class="form-control" />
+                <ValidationMessage For="@(() => personas.Direccion)" />
+            </div>
+
+             <div class="form-group">
+                <label>Fecha de nacimiento</label>
+                <InputDate @bind-Value="personas.FechaNacimiento" class="form-control" />
+                <ValidationMessage For="@(() => personas.FechaNacimiento)" />
+            </div>
+
+            <div class="form-group">
+                <label>Balance</label>
+                <InputNumber @bind-Value="personas.Balance" class="form-control" />
+                <ValidationMessage For="@(() => personas.Balance)" />
+            </div>
+
+            <label>Ocupacion</label>
+            <InputSelect class="form-select text-14" @bind-Value="personas.OcupacionId">
+                <option value="null"> </option>
+                @foreach (var item in lista)
+                {
+
+                    <option value="@item.OcupacionId">@item.Descripcion</option>
+
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() =>personas.OcupacionId)" />
+        </div>
+
+        <div class="card-footer d-flex justify-content-center">
+             <div class="border border-3 btn-group" role="group">
+                <button type="submit" class="bi bi-file-earmark-fill btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
+                <button type="submit" class="bi bi-file-earmark-text-fill btn btn-lg btn-success"@onclick="Guardar">Guardar</button>
+                <button type="submit" class="bi bi-trash btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
+            </div>
+
+        </div>
+</EditForm>
+
+@code {
+
+     [Parameter]
+
+    public int PersonaId { get; set; }
+    public Persona personas { get; set; } = new Persona();
+    public int OcupacionId { get; set; }
+    public Ocupaciones ocupacion { get; set; } = new Ocupaciones();
+    public List<Ocupaciones> lista = new List<Ocupaciones>();
+    
+    protected override void OnInitialized()
+    {
+        if(PersonaId > 0)
+        {
+            this.personas.OcupacionId = PersonaId;
+            this.Buscar();
+        }
+
+        lista = personasBll.GetOcupaciones(c => true);
+    }
+    
+    public void Buscar()
+    {
+         if (personas.PersonaId > 0 || ocupacion.OcupacionId > 0)
+        {
+            var encontrado = personasBll.Buscar(personas.PersonaId);
+
+            if (encontrado != null)
+                this.personas = encontrado;
+        } 
+ 
+    }
+
+    public void Nuevo()
+    {
+        this.personas = new Persona();
+    }
+
+    public void Guardar()
+    {
+       var guardado = personasBll.Guardar(personas);
+
+        if (guardado)
+        {
+            Nuevo();
+            
+        }
+        else
+        {
+            
+        }
+    }
+
+    public void Eliminar()
+    {
+        var elimino = personasBll.Eliminar(personas);
+        if (elimino)
+        {
+            Nuevo();
+            
+        }
+
+    }
+
+}
