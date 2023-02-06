@@ -1,16 +1,106 @@
-﻿@page "/pagos"
+﻿@page "/C_pagos"
 @inject PagosBLL pagosBll
 
+<EditForm Model="pagos">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <DataAnnotationsValidator />
+    <div class="card-header text-center">
+        <div class="card-header text-center">
+            <h3>Consulta Pagos</h3>
+        </div>
+        
+        <form class="input-group align-items-end card-body">
+            <div class="container overflow-hidden">
+                <div class="row gy-3">
+                    <div class="form-group text-center">
+                        <button type="button" class="bi bi-person-workspace btn btn-lg btn-primary" @onclick="Generar"> Generar Tabla</button>
+                    </div>
 
+                    <div class="col-md-6">
+                        <label>Filtro</label>
+                        <select class="form-control" @bind="Filtro">
+                            <option value="0"></option>
+                            <option value="1">PagoId</option>
+                            <option value="2">Concepto</option>
+                            <option value="3">Fecha</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Buscar</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" @bind="Criterio" />
+                                <div class="input-group-append">
+                                    <button type="button" class="input-group-text btn btn-primary" @onclick="Buscar"> <i class="oi oi-magnifying-glass" /></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <table class="table table text-white">
+            <thead class="thead-dark">
+                <tr class="table-info">
+                    <th>PagoId</th>
+                    <th>Fecha</th>
+                    <th>PersonaId</th>
+                    <th>Concepto</th>
+                    <th>Monto</th>
+                    <th>Ver</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pagos in  pagos)
+                {
+                    <tr>
+                        <th>@pagos.PagoId</th>
+                        <th>@pagos.Fecha</th>
+                        <th>@pagos.PersonaId</th>
+                        <th>@pagos.Concepto</th>
+                        <th>@pagos.Monto</th>
+                        <td><a href="pagos/@pagos.PagoId">Ver</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</EditForm>
 
 @code {
 
     public List<Pago> pagos = new List<Pago>();
     public List<PagosDetalles> pagosDetalles = new List<PagosDetalles>();
+    public string Filtro { get; set; } 
+    public string Criterio { get; set; }
+    private DateTime fecha { get; set; }
   
     public async Task Buscar()
     {
         pagos = await pagosBll.GetList(o => true);
+
+        if (Criterio != null){
+            switch (Filtro)
+            {
+                case "0":
+                  pagos = await pagosBll.GetList(o => true); 
+                  break;
+                case "1":
+                  pagos = await pagosBll.GetList(o => o.PagoId.ToString() == (Criterio));
+                  break; ;
+                case "2":
+                  pagos = await pagosBll.GetList(o => o.Concepto.ToString() == (Criterio));
+                  break;
+                case "3":
+                  pagos = await pagosBll.GetList(o => o.Fecha.ToString() == (Criterio));
+                  break;
+            }
+        }
+        else
+        {
+            pagos = await pagosBll.GetList(t => true);
+        }  
         
     } 
     public async Task Generar()

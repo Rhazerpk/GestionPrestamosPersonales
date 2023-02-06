@@ -5,7 +5,158 @@
 @inject PersonasBLL personasBll
 @inject PrestamosBLL prestamosBll
 
+<EditForm Model="pagos" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
 
+    <div class="card-header text-center">
+        <div class="card-header text-center">
+            <h3>Registro de Pagos</h3>
+        </div>
+
+        <div class="card-header text-center">
+            <div class="container overflow-hidden">
+                <form class="row gy-3">
+                    @*Pagos*@
+                    <div class="form-row align-items-center">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-label">PagoId</label>
+                                <div class="input-group">
+                                    <InputNumber @bind-Value="pagos.PagoId" class="form-control col-4" />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-primary input-group-text"
+                                            @onclick="Buscar">
+                                            <i class="oi oi-magnifying-glass" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="col-md-3">
+                        <label class="form-label">Fecha</label>
+                        <InputDate class="form-control" @bind-Value="pagos.Fecha" />
+                        <ValidationMessage For="@(() => pagos.Fecha)" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">PersonaId</label>
+                        <InputSelect class="form-select" @bind-Value="pagos.PersonaId">
+                            @foreach (Persona persona in listPersonas)
+                            {
+                                <option value="@persona.PersonaId"> @persona.Nombres</option>
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(()=>pagos.PersonaId)" />
+                    </div>
+
+                    
+                    <div class="col-md-3">
+                        <label class="form-label">Concepto</label>
+                        <InputText class="form-control" @bind-Value="pagos.Concepto" />
+                        <ValidationMessage For="@(()=> pagos.Concepto )" />
+                    </div>
+
+                    
+                    <div class="col-md-3">
+                        <label class="form-label">Monto</label>
+                        <InputNumber class="form-control" @bind-Value="pagos.Monto" />
+                        <ValidationMessage For="@(() => pagos.Monto)" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card-header text-center">
+            <h3>Detalles de Pago</h3>
+        </div>
+
+        <div class="card-header text-center">
+            <div class="container overflow-hidden">
+                <form class="row gy-3">
+                    
+                    <div class="col-md-2">
+                        <label class="form-label">PagoId</label>
+                        <InputSelect class="form-select" @bind-Value="detalle.PagoId">
+                            @foreach (Pago pago in listPago)
+                            {
+                                <option value="@pagos.PagoId"> Id:@pago.PagoId </option>
+                            }
+                        </InputSelect>
+                    </div>
+
+                   
+                    <div class="col-md-3">
+                        <label class="form-label">PrestamoId</label>
+                        <InputSelect class="form-select" @bind-Value="detalle.PrestamoId">
+                            @foreach (Prestamo prestamos in listPrestamos)
+                            {
+                                <option value="@prestamos.PrestamoId"> Id:@prestamos.PrestamoId</option>
+                            }
+
+                        </InputSelect>
+                    </div>
+
+                    
+                    <div class="col-md-3">
+                        <label class="form-label">Valor Pagado</label>
+                        <InputNumber class="form-control" @bind-Value="detalle.ValorPagado"></InputNumber>
+                        <ValidationMessage For="@(() => detalle.ValorPagado)"></ValidationMessage>
+                    </div>
+                   
+                    <table class="card-header text-center">
+                        <thead class="thead">
+                            <tr class="table-white border border-4">
+                                <th>PrestamoId</th>
+                                <th>PagoId</th>
+                                <th>ValorPagado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var detalle in pagos.PagosDetalles)
+                            {
+
+                                if (detalle  == pagos.PagosDetalles.ElementAt(0))
+                                {
+                                    pagos.Monto = 0;
+                                }
+                                <tr>
+                                    <td>@detalle.PrestamoId</td>
+                                    <td>@detalle.PagoId</td>
+                                    <td>@detalle.ValorPagado</td>
+                                    <td><button type="button" class="btn btn-primary"
+                                        @onclick="@(() => pagos.PagosDetalles.Remove(detalle))"><i
+                                            class="oi oi-trash" /> Eliminar</button> </td>
+                                </tr>
+
+                                pagos.Monto += detalle.ValorPagado;
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="row justify-content-between">
+                        <div class="col-md-4">
+                            <label class="form-label">Monto Total</label>
+                            <div class="input-group mb-3">
+                                <span class="form-control">@pagos.Monto</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-footer d-flex justify-content-center">
+        <div class="border border-3 btn-group" role="group">
+            <button type="button" class="btn btn-primary" @onclick="Guardar"> <i class="oi oi-document" /> Guardar</button>
+            <button type="button" class="btn btn-danger" @onclick="Eliminar"><i class="oi oi-trash" /> Eliminar</button>
+        </div>
+    </div>
+
+</EditForm>
 
 
 @code {

@@ -18,5 +18,5 @@ public class Pago{
     [ForeignKey("PagoId")]
     public virtual List<PagosDetalles> PagosDetalles { get; set; } = new List<PagosDetalles>();
     
-
+    
 }
