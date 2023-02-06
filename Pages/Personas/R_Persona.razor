@@ -99,58 +99,52 @@
     public Ocupaciones ocupacion { get; set; } = new Ocupaciones();
     public List<Ocupaciones> lista = new List<Ocupaciones>();
     
-    protected override void OnInitialized()
+   protected async override Task OnInitializedAsync()
     {
-        if(PersonaId > 0)
+        lista = await ocupacionesBll.GetOcupaciones(o => true);
+        
+        if (PersonaId > 0)
         {
-            this.personas.OcupacionId = PersonaId;
-            this.Buscar();
+            this.personas.PersonaId = PersonaId;
+            await this.Buscar();
         }
-
-        lista = personasBll.GetOcupaciones(c => true);
     }
-    
-    public void Buscar()
-    {
-         if (personas.PersonaId > 0 || ocupacion.OcupacionId > 0)
-        {
-            var encontrado = personasBll.Buscar(personas.PersonaId);
 
+    private async Task Buscar()
+    {
+        if (personas.PersonaId > 0)
+        {
+            var encontrado = await personasBll.Buscar(personas.PersonaId);
             if (encontrado != null)
+            {
                 this.personas = encontrado;
-        } 
- 
+            }
+        }
     }
 
     public void Nuevo()
     {
-        this.personas = new Persona();
+        personas = new Persona();
+        
     }
 
-    public void Guardar()
+    public async Task Guardar()
     {
-       var guardado = personasBll.Guardar(personas);
+        var guardo = await personasBll.Guardar(personas);
 
-        if (guardado)
+        if (guardo)
         {
             Nuevo();
-            
-        }
-        else
-        {
-            
+           
         }
     }
-
-    public void Eliminar()
+    public async Task Eliminar()
     {
-        var elimino = personasBll.Eliminar(personas);
+        var elimino = await personasBll.Eliminar(personas);
         if (elimino)
         {
             Nuevo();
             
         }
-
     }
-
 }

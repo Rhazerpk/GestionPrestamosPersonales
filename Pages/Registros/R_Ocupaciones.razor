@@ -49,55 +49,54 @@
     public int OcupacionId { get; set; }
     public Ocupaciones ocupacion { get; set; } = new Ocupaciones();
     
-
-    protected override void OnInitialized()
+   protected async override Task OnInitializedAsync()
     {
-        if(OcupacionId > 0)
+        if (OcupacionId > 0)
         {
             this.ocupacion.OcupacionId = OcupacionId;
-            this.Buscar();
+            await this.Buscar();
         }
     }
 
-    public void Buscar()
+    private async Task Buscar()
     {
-        var ocupacionEncontrada = ocupacionesBll.Buscar(ocupacion.OcupacionId);
-
-        if(ocupacionEncontrada != null)
+        if (ocupacion.OcupacionId > 0)
         {
-            this.ocupacion = ocupacionEncontrada;
+            var encontrado = await ocupacionesBll.Buscar(ocupacion.OcupacionId);
+
+            if (encontrado != null){
+                this.ocupacion = encontrado;
+                
+            }
         }
     }
 
     public void Nuevo()
     {
-        this.ocupacion = new Ocupaciones();
+        ocupacion = new Ocupaciones();
+
     }
 
-    public void Guardar()
+    public async Task Guardar()
     {
-       var guardado = ocupacionesBll.Guardar(ocupacion);
 
-        if (guardado)
+        var guardo = await ocupacionesBll.Guardar(ocupacion);
+        if (guardo)
         {
             Nuevo();
-            
-        }
-        else
-        {
-            
         }
     }
 
-    public void Eliminar()
+
+    public async Task Eliminar()
     {
-        var elimino = ocupacionesBll.Eliminar(ocupacion);
+        var elimino = await ocupacionesBll.Eliminar(ocupacion);
         if (elimino)
         {
             Nuevo();
             
         }
-
+       
     }
 }
 

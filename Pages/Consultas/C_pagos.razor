@@ -1,0 +1,21 @@
+﻿@page "/pagos"
+@inject PagosBLL pagosBll
+
+
+
+@code {
+
+    public List<Pago> pagos = new List<Pago>();
+    public List<PagosDetalles> pagosDetalles = new List<PagosDetalles>();
+  
+    public async Task Buscar()
+    {
+        pagos = await pagosBll.GetList(o => true);
+        
+    } 
+    public async Task Generar()
+    {
+        pagos = await pagosBll.GetList(t => true);
+    }        
+
+}

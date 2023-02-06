@@ -57,9 +57,9 @@
     public Prestamo prestamos { set; get; } = new Prestamo();
     public Persona persona { get; set; } = new Persona();
     public List<Prestamo> Datos { get; set; } = new List<Prestamo>();
-    public void Buscar()
+    public async Task Buscar()
     {
-        Datos = prestamosBll.GetList(o => true);
+        Datos = await prestamosBll.GetList(o => true);
     }
 
 }

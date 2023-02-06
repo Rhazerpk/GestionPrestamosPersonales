@@ -1,0 +1,67 @@
+﻿@page "/pagos"
+@page "/pagos/{PagoId:int}"
+
+@inject PagosBLL pagosBll
+@inject PersonasBLL personasBll
+@inject PrestamosBLL prestamosBll
+
+
+
+
+@code {
+
+    [Parameter]
+
+    public int PagoId { get; set; }
+    public Pago pagos { get; set; } = new Pago();
+    public PagosDetalles detalle { get; set; } = new PagosDetalles();
+    public List<Pago> listPago { get; set; } = new List<Pago>();
+    public List<Persona> listPersonas { get; set; } = new List<Persona>();
+    public List<Prestamo> listPrestamos { get; set; } = new List<Prestamo>();
+
+    private async Task Buscar()
+    {
+        if (pagos.PagoId > 0)
+        {
+            var encontrado = await pagosBll.Buscar(pagos.PagoId);
+
+            if (encontrado != null)
+            {
+                  this.pagos = encontrado;
+            }
+    
+        }
+    }
+
+    public void Nuevo()
+    {
+        pagos = new Pago();
+    }
+
+    public async Task Guardar()
+    {
+        bool guardo;
+
+        guardo = await pagosBll.Guardar(pagos);
+
+        if (guardo)
+        {
+            Nuevo();
+        }
+
+    }
+
+    public async Task Eliminar()
+    {
+        bool elimino;
+
+        elimino = await pagosBll.Eliminar(pagos);
+
+        if (elimino)
+        {
+            Nuevo();
+        }
+    }
+
+
+}

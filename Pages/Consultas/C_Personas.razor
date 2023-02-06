@@ -62,8 +62,8 @@
     public Persona personas { set; get; } = new Persona();
     public List<Persona> persona { get; set; } = new List<Persona>();
     public List<Prestamo> prestamos { get; set; } = new List<Prestamo>();
-    public void Buscar()
+    public async Task Buscar()
     {
-        persona = personasBll.GetList(o => true);
+        persona = await personasBll.GetList(o => true);
     }
 }

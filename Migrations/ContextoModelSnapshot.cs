@@ -34,6 +34,52 @@ namespace Registro.Migrations
                     b.ToTable("Ocupaciones");
                 });
 
+            modelBuilder.Entity("Pagos", b =>
+                {
+                    b.Property<int>("PagoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Concepto")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Monto")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("PersonaId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("PagoId");
+
+                    b.ToTable("Pagos");
+                });
+
+            modelBuilder.Entity("PagosDetalles", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PagoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PrestamoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("ValorPagado")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PagoId");
+
+                    b.ToTable("PagosDetalles");
+                });
+
             modelBuilder.Entity("Persona", b =>
                 {
                     b.Property<int>("PersonaId")
@@ -74,7 +120,7 @@ namespace Registro.Migrations
                     b.ToTable("Personas");
                 });
 
-            modelBuilder.Entity("Prestamos", b =>
+            modelBuilder.Entity("Prestamo", b =>
                 {
                     b.Property<int>("PrestamoId")
                         .ValueGeneratedOnAdd()
@@ -102,6 +148,20 @@ namespace Registro.Migrations
                     b.HasKey("PrestamoId");
 
                     b.ToTable("Prestamos");
+                });
+
+            modelBuilder.Entity("PagosDetalles", b =>
+                {
+                    b.HasOne("Pagos", null)
+                        .WithMany("PagosDetalles")
+                        .HasForeignKey("PagoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Pagos", b =>
+                {
+                    b.Navigation("PagosDetalles");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,58 +9,69 @@ public class PrestamosBLL{
         _contexto = contexto;
     }
 
-    public bool Existe(int PrestamoId)
+    public async Task<bool> Existe(int prestamosId)
     {
-        return _contexto.Prestamos.Any(o => o.PrestamoId == PrestamoId);
+        return await _contexto.Prestamos.AnyAsync(o => o.PrestamoId == prestamosId);
     }
 
-   private bool Insertar(Prestamo prestamos)
+    public async Task<bool> Guardar(Prestamo prestamos)
     {
-        _contexto.Prestamos.Add(prestamos);
-        return _contexto.SaveChanges() > 0;
-    }
-
-    private bool Modificar(Prestamo prestamos)
-    {
-        _contexto.Entry(prestamos).State = EntityState.Modified;
-        return _contexto.SaveChanges() > 0;
-
-    }
-
-    public bool Guardar(Prestamo prestamos)
-    {
-        if(!Existe(prestamos.PersonaId))
-            return this.Insertar(prestamos);
+        if (!await Existe(prestamos.PrestamoId))
+            return await this.Insertar(prestamos);
         else
-            return this.Modificar(prestamos);
+            return await this.Modificar(prestamos);
     }
 
-    public bool Eliminar(Prestamo prestamos)
+    public async Task<bool> Eliminar(Prestamo prestamos)
     {
-        _contexto.Entry(prestamos).State = EntityState.Deleted;
-        return _contexto.SaveChanges() > 0;
+    var personas = await _contexto.Personas.FindAsync(prestamos.PersonaId);
+    personas.Balance -= prestamos.Monto;
+
+    _contexto.Entry(prestamos).State = EntityState.Deleted;
+    return await _contexto.SaveChangesAsync() > 0;
+    }
+    public async Task<bool> Insertar(Prestamo prestamos)
+    {
+    await _contexto.Prestamos.AddAsync(prestamos);
+    
+    var persona = await _contexto.Personas.FindAsync(prestamos.PersonaId);
+    persona.Balance += prestamos.Monto;
+    
+    int cantidad = await _contexto.SaveChangesAsync();
+    
+    return cantidad > 0;
     }
 
-    public Prestamo? Buscar(int PrestamoId)
+    public async Task<bool> Modificar(Prestamo prestamoActual)
     {
-        return _contexto.Prestamos
-        .Where(o => o.PersonaId == PrestamoId)
+        var prestamoAnterior = await _contexto.Prestamos
+        .Where(p => p.PrestamoId == prestamoActual.PrestamoId)
         .AsNoTracking()
-        .SingleOrDefault();
+        .SingleOrDefaultAsync();
+
+        var personaAnterior = await _contexto.Personas.FindAsync(prestamoActual.PersonaId);
+        personaAnterior.Balance -= prestamoActual.Monto;
+
+        _contexto.Entry(prestamoActual).State = EntityState.Modified;
+        
+        var persona = await _contexto.Personas.FindAsync(prestamoActual.PersonaId);
+        persona.Balance += prestamoActual.Monto;
+
+        return await _contexto.SaveChangesAsync() > 0;
     }
-    public List<Prestamo> GetList(Expression<Func<Prestamo, bool>> Criterio)
+
+    public async Task<Prestamo?> Buscar(int PrestamoId)
     {
-        return _contexto.Prestamos
+        return await _contexto.Prestamos
+        .Where(o => o.PrestamoId == PrestamoId)
+        .AsNoTracking()
+        .SingleOrDefaultAsync();
+    }
+    public async Task<List<Prestamo>> GetList(Expression<Func<Prestamo, bool>> Criterio)
+    {
+        return await _contexto.Prestamos
         .AsNoTracking()
         .Where(Criterio)
-        .ToList();
-    }
-
-     public List<Persona> GetPersonas(Expression<Func<Persona, bool>> Criterio)
-    {
-        return _contexto.Personas
-        .AsNoTracking()
-        .Where(Criterio)
-        .ToList();
+        .ToListAsync();
     }
 }

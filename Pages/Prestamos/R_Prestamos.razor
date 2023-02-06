@@ -45,10 +45,15 @@
 
                     
                     <div class="col-md-4">
-                        <label for="personas.PersonaId" class="form-label">PersonaID</label>
-                        <InputNumber @bind-Value="prestamos.PersonaId" class="form-control" />
-                        <ValidationMessage For="@(() => prestamos.PersonaId)" />
-                    </div>
+                        <label class="form-label">PersonaId</label>
+                        <InputSelect class="form-select" @bind-Value="prestamos.PersonaId">
+                        <option value="0" disabled> Seleccione el nombre </option>
+                        @foreach (Persona personas in listaPersonas)
+                        {
+                            <option value="@personas.PersonaId">@personas.Nombres</option>
+                        }
+                        </InputSelect>
+                    </div>  
             
 
                     
@@ -95,25 +100,24 @@
     public Ocupaciones ocupacion { get; set; } = new Ocupaciones();
     public List<Persona> listaPersonas = new List<Persona>();
     
-    protected override void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
-        listaPersonas = prestamosBll.GetPersonas(c => true);
+        listaPersonas = await personasBll.GetList(c => true);
         if (PrestamoId > 0)
         {
             this.prestamos.PrestamoId = PrestamoId;
-            this.Buscar();
+            await this.Buscar();
         }
     }
 
-    private void Buscar()
+    private async Task Buscar()
     {
-        if (prestamos.PrestamoId > 0 || ocupacion.OcupacionId > 0)
+        if (prestamos.PrestamoId > 0)
         {
-            var encontrado = prestamosBll.Buscar(prestamos.PrestamoId);
+            var encontrado = await prestamosBll.Buscar(prestamos.PrestamoId);
             if (encontrado != null)
             {
                 this.prestamos = encontrado;
-               
             }
         }
     }
@@ -121,29 +125,27 @@
     public void Nuevo()
     {
         prestamos = new Prestamo();
-        prestamos.Fecha = DateTime.Now;
-        prestamos.Vence = DateTime.Now;
-        
+       
     }
 
 
-    public void Guardar()
+    public async Task Guardar()
     {
-        var guardo = prestamosBll.Guardar(prestamos);
+        var guardo = await prestamosBll.Guardar(prestamos);
         if (guardo)
         {
             Nuevo();
-            
+           
         }
     }
 
-    public void Eliminar()
+    public async Task Eliminar()
     {
-        var elimino = prestamosBll.Eliminar(prestamos);
+        var elimino = await prestamosBll.Eliminar(prestamos);
         if (elimino)
         {
             Nuevo();
-            
+           
         }
 
     }

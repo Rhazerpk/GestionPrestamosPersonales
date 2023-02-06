@@ -48,9 +48,9 @@
 
     public Ocupaciones ocupacion { set; get; } = new Ocupaciones();
     public List<Ocupaciones> ocupaciones { get; set; } = new List<Ocupaciones>();
-    public void Buscar()
+    public async Task Buscar()
     {
-        ocupaciones = ocupacionesBll.GetList(o => true);
+        ocupaciones =  await ocupacionesBll.GetOcupaciones(o => true);
     }
 
 }
