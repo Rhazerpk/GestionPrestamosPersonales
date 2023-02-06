@@ -34,7 +34,7 @@ namespace Registro.Migrations
                     b.ToTable("Ocupaciones");
                 });
 
-            modelBuilder.Entity("Pagos", b =>
+            modelBuilder.Entity("Pago", b =>
                 {
                     b.Property<int>("PagoId")
                         .ValueGeneratedOnAdd()
@@ -152,14 +152,14 @@ namespace Registro.Migrations
 
             modelBuilder.Entity("PagosDetalles", b =>
                 {
-                    b.HasOne("Pagos", null)
+                    b.HasOne("Pago", null)
                         .WithMany("PagosDetalles")
                         .HasForeignKey("PagoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Pagos", b =>
+            modelBuilder.Entity("Pago", b =>
                 {
                     b.Navigation("PagosDetalles");
                 });
