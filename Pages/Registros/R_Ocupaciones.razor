@@ -87,17 +87,11 @@
 
     public void Eliminar()
     {
-        bool eliminado = ocupacionesBll.Eliminar(ocupacion);
-
-        eliminado = false; 
+        var eliminado = ocupacionesBll.Eliminar(ocupacion);
 
         if (eliminado)
         {
             Nuevo();   
-        }
-        else
-        {
-            
         }
 
     }
