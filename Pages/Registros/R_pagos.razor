@@ -4,6 +4,7 @@
 @inject PagosBLL pagosBll
 @inject PersonasBLL personasBll
 @inject PrestamosBLL prestamosBll
+@inject NotificationService notifierSvc
 
 <EditForm Model="pagos" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
@@ -169,6 +170,7 @@
     public List<Pago> listPago { get; set; } = new List<Pago>();
     public List<Persona> listPersonas { get; set; } = new List<Persona>();
     public List<Prestamo> listPrestamos { get; set; } = new List<Prestamo>();
+     public String mensaje { get; set; } = "";
 
     
     protected async override Task OnInitializedAsync()
@@ -185,6 +187,14 @@
         listPago = await pagosBll.GetList(o => true);
         listPrestamos = await prestamosBll.GetList(o => true);
     }
+    public void AgregarDetalle()
+    {
+        if (pagos.PersonaId > 0)
+        {
+            pagos.PagosDetalles.Add(detalle);
+            detalle = new PagosDetalles();
+        }
+    }
     private async Task Buscar()
     {
         if (pagos.PagoId > 0)
@@ -193,28 +203,76 @@
 
             if (encontrado != null)
             {
-                  this.pagos = encontrado;
+                this.pagos = encontrado;
+
+                ShowNotification(
+                new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = "Se encontraron los datos correctamente"
+                });
             }
-    
+
+            else
+            {
+                ShowNotification(
+                new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Warning,
+                    Summary = "Registro no encontrado"
+                });
+            }
         }
     }
 
     public void Nuevo()
     {
+        mensaje = "";
         pagos = new Pago();
+
+        ShowNotification(
+        new NotificationMessage
+        {
+            Severity = NotificationSeverity.Success,
+            Summary = "Nueva plantilla creada correctamente"
+        });
     }
 
-    public async Task Guardar()
+   public async Task Guardar()
     {
         bool guardo;
+
+        if (!Validar())
+        {
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error Revise los campos "
+            });
+            return;
+        }
+
 
         guardo = await pagosBll.Guardar(pagos);
 
         if (guardo)
         {
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Guardado correctamente"
+            });
+
             Nuevo();
+
         }
 
+    }
+    bool Validar()
+    {
+        return true;
     }
 
     public async Task Eliminar()
@@ -225,9 +283,20 @@
 
         if (elimino)
         {
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Eliminado"
+            });
+
             Nuevo();
+
         }
     }
 
-
+    void ShowNotification(NotificationMessage message)
+    {
+        notifierSvc.Notify(message);
+    }
 }

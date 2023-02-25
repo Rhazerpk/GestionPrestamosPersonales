@@ -33,6 +33,13 @@ public class OcupacionesBLL{
             return await this.Modificar(ocupacion);
 
     }
+    public async Task<bool> Editar(Ocupaciones ocupacion)
+    {
+        if (!await Existe(ocupacion.OcupacionId))
+            return await this.Insertar(ocupacion);
+        else
+            return await this.Modificar(ocupacion);
+    }
 
     public async Task<bool> Eliminar(Ocupaciones ocupacion){
 

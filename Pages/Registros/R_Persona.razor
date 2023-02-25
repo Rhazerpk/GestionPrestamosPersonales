@@ -3,6 +3,7 @@
 
 @inject PersonasBLL personasBll
 @inject OcupacionesBLL ocupacionesBll
+@inject NotificationService notifierSvc
 
 <EditForm Model="personas" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
@@ -97,6 +98,7 @@
     public int OcupacionId { get; set; }
     public Ocupaciones ocupacion { get; set; } = new Ocupaciones();
     public List<Ocupaciones> lista = new List<Ocupaciones>();
+    public String mensaje { get; set; } = "";
     
    protected async override Task OnInitializedAsync()
     {
@@ -114,16 +116,40 @@
         if (personas.PersonaId > 0)
         {
             var encontrado = await personasBll.Buscar(personas.PersonaId);
-            if (encontrado != null)
-            {
+            if (encontrado != null){
                 this.personas = encontrado;
+
+                ShowNotification(
+                new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = "Se encontraron los datos correctamente"
+                });
+            }
+
+            else
+            {
+                ShowNotification(
+                new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Warning,
+                    Summary = "Registro no encontrado"
+                });
             }
         }
     }
 
     public void Nuevo()
     {
+        mensaje = "";
         personas = new Persona();
+
+        ShowNotification(
+        new NotificationMessage
+        {
+            Severity = NotificationSeverity.Success,
+            Summary = "Nueva plantilla creada correctamente"
+        });
         
     }
 
@@ -134,7 +160,48 @@
         if (guardo)
         {
             Nuevo();
+
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Guardado correctamente"
+            });
+        }
+        else
+        {
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "No fue guardado, intentar nuevamente."
+            });
            
+        }
+    }
+    public async Task Editar()
+    {
+        var editar = await personasBll.Editar(personas);
+
+        if (editar)
+        {
+            Nuevo();
+
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Editado correctamente"
+            });
+        }
+        else
+        {
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "No fue editado, intentar nuevamente."
+            });
         }
     }
     public async Task Eliminar()
@@ -143,7 +210,27 @@
         if (elimino)
         {
             Nuevo();
-            
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Eliminado correctamente"
+            });
+        }
+
+        else
+        {
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "No fue eliminado, intentar nuevamente."
+            });
         }
     }
+    void ShowNotification(NotificationMessage message)
+    {
+        notifierSvc.Notify(message);
+    }
 }
+

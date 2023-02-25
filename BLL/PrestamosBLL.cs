@@ -40,6 +40,15 @@ public class PrestamosBLL{
     int cantidad = await _contexto.SaveChangesAsync();
     
     return cantidad > 0;
+
+    }
+
+    public async Task<bool> Editar(Prestamo prestamos)
+    {
+        if (!await Existe(prestamos.PrestamoId))
+            return await this.Insertar(prestamos);
+        else
+            return await this.Modificar(prestamos);
     }
 
     public async Task<bool> Modificar(Prestamo prestamoActual)

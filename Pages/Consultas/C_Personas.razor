@@ -3,7 +3,6 @@
 
 
 <EditForm Model="personas">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <DataAnnotationsValidator />
     <div class="card">
         <div class="card-header text-center">
@@ -17,8 +16,30 @@
                    <button type="button" class="bi bi-file-earmark-person btn btn-lg btn-primary" @onclick="Buscar"> Generar Tabla Personas</button>
 
                 </div>
+                <div class="col-md-6">
+                        <label>Filtro</label>
+                        <select class="form-control" @bind="Filtro">
+                            <option value="0"></option>
+                            <option value="1">PersonaId</option>
+                            <option value="2">Nombre</option>
+                            <option value="3">OcupacionId</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Buscar</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" @bind="Criterio" />
+                                <div class="input-group-append">
+                                    <button type="button" class="input-group-text btn btn-primary" @onclick="Buscar"> <i class="oi oi-magnifying-glass" /></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </form>
         </div>
+        
         <table class="table table-secondary">
             <thead class="thead-dark">
                 <tr class="table-info">
@@ -62,7 +83,35 @@
     public Persona personas { set; get; } = new Persona();
     public List<Persona> persona { get; set; } = new List<Persona>();
     public List<Prestamo> prestamos { get; set; } = new List<Prestamo>();
+    public string Filtro { get; set; }
+    public string Criterio { get; set; }
     public async Task Buscar()
+    {
+        persona = await personasBll.GetList(o => true);
+        if(Criterio != null)
+        {
+            switch (Filtro)
+            {
+                case "0":
+                    persona = await personasBll.GetList(o => true);
+                    break;
+                case "1":
+                    persona = await personasBll.GetList(o => o.PersonaId.ToString() == (Criterio));
+                    break;
+                case "2":
+                    persona = await personasBll.GetList(o => o.Nombres.ToLower().Contains(Criterio.ToLower()));
+                    break;
+                case "3":
+                    persona = await personasBll.GetList(o => o.OcupacionId.ToString() == (Criterio));
+                    break;
+            }
+        }
+        else
+        {
+            persona = await personasBll.GetList(o => true);
+        }
+    }
+    public async Task Generar()
     {
         persona = await personasBll.GetList(o => true);
     }

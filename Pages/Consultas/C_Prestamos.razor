@@ -3,7 +3,6 @@
 
 
 <EditForm Model="Datos">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <DataAnnotationsValidator />
     <div class="card">
         <div class="card-header text-center">
@@ -17,6 +16,27 @@
 
                    <button type="button" class="bi bi-file-ppt-fill btn btn-lg btn-primary" @onclick="Buscar"> Generar Tabla Prestamos</button>
 
+                </div>
+                <div class="row gy-3">
+                    <div class="col-md-6">
+                        <label>Filtro</label>
+                        <select class="form-control" @bind="Filtro">
+                            <option value="0"></option>
+                            <option value="1">PrestamoId</option>
+                            <option value="2">PersonaId</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Buscar</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" @bind="Criterio" />
+                                <div class="input-group-append">
+                                    <button type="button" class="input-group-text btn btn-primary" @onclick="Buscar"> <i class="oi oi-magnifying-glass" /></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -57,9 +77,31 @@
     public Prestamo prestamos { set; get; } = new Prestamo();
     public Persona persona { get; set; } = new Persona();
     public List<Prestamo> Datos { get; set; } = new List<Prestamo>();
+    public string Filtro { get; set; } 
+    public string Criterio { get; set; }
     public async Task Buscar()
     {
         Datos = await prestamosBll.GetList(o => true);
+        if (Criterio != null)
+        {
+            switch (Filtro)
+            {
+                case "0":
+                    Datos = await prestamosBll.GetList(o => true);
+                    break;
+                case "1":
+                    Datos = await prestamosBll.GetList(o => o.PrestamoId.ToString() == (Criterio));
+                    break;
+                case "2":
+                    Datos = await prestamosBll.GetList(o => o.PersonaId.ToString() == (Criterio));
+                    break;
+            }
+        }
+        
+        else
+        {
+            Datos = await prestamosBll.GetList(o => true);
+        }
     }
 
 }

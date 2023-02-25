@@ -74,3 +74,5 @@ C:\Users\elpri\OneDrive\Desktop\Progamacion aplicada I\Registro\obj\Debug\net6.0
 C:\Users\elpri\OneDrive\Desktop\Progamacion aplicada I\Registro\obj\Debug\net6.0\Registro.pdb
 C:\Users\elpri\OneDrive\Desktop\Progamacion aplicada I\Registro\obj\Debug\net6.0\Registro.genruntimeconfig.cache
 C:\Users\elpri\OneDrive\Desktop\Progamacion aplicada I\Registro\obj\Debug\net6.0\ref\Registro.dll
+C:\Users\elpri\OneDrive\Desktop\Progamacion aplicada I\Registro\bin\Debug\net6.0\Radzen.Blazor.dll
+C:\Users\elpri\OneDrive\Desktop\Progamacion aplicada I\Registro\bin\Debug\net6.0\System.Linq.Dynamic.Core.dll
