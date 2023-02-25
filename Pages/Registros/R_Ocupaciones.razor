@@ -1,6 +1,7 @@
 ﻿@page "/ocupacion"
 @page "/ocupacion/{OcupacionId:int}"
 @inject OcupacionesBLL ocupacionesBll
+@inject NotificationService notifierSvc
 
 <EditForm Model="ocupacion" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
@@ -47,44 +48,102 @@
 
     public int OcupacionId { get; set; }
     public Ocupaciones ocupacion { get; set; } = new Ocupaciones();
-    
+    public String mensaje { get; set; } = "";
 
     protected override void OnInitialized()
     {
-        if(OcupacionId > 0)
+        if (OcupacionId > 0)
         {
             this.ocupacion.OcupacionId = OcupacionId;
             this.Buscar();
         }
     }
 
-    public void Buscar()
+    private void Buscar()
     {
-        var ocupacionEncontrada = ocupacionesBll.Buscar(ocupacion.OcupacionId);
-
-        if(ocupacionEncontrada != null)
+        if (ocupacion.OcupacionId > 0)
         {
-            this.ocupacion = ocupacionEncontrada;
+            var encontrado = ocupacionesBll.Buscar(ocupacion.OcupacionId);
+            if (encontrado != null){
+                this.ocupacion = encontrado;
+                ShowNotification(
+                new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = "Se encontraron los datos correctamente"
+                });
+            }
+            else{
+                ShowNotification(
+                new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Warning,
+                    Summary = "Registro no encontrado"
+                });
+            }
         }
     }
 
     public void Nuevo()
     {
-        this.ocupacion = new Ocupaciones();
+        mensaje = "";
+        ocupacion = new Ocupaciones();
+        ShowNotification(
+        new NotificationMessage
+        {
+            Severity = NotificationSeverity.Success,
+            Summary = "Nueva plantilla creada correctamente"
+        });
     }
 
     public void Guardar()
     {
-       var guardado = ocupacionesBll.Guardar(ocupacion);
 
-        if (guardado)
+        var guardo = ocupacionesBll.Guardar(this.ocupacion);
+        if (guardo)
         {
             Nuevo();
-            
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Guardado correctamente"
+            });
         }
         else
         {
-            
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "No fue guardado, intentar nuevamente."
+            });
+           
+        }
+    }
+
+    public void Editar()
+    {
+        var editar = ocupacionesBll.Editar(ocupacion);
+
+        if (editar)
+        {
+            Nuevo();
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Editado correctamente"
+            });
+        }
+        else
+        {
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "No fue editado, intentar nuevamente."
+            });
         }
     }
 
@@ -94,9 +153,27 @@
         if (elimino)
         {
             Nuevo();
-            
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Eliminado correctamente"
+            });
         }
-
+        else
+        {
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "No fue eliminado, intentar nuevamente."
+            });
+        }
+    }
+    
+    void ShowNotification(NotificationMessage message)
+    {
+        notifierSvc.Notify(message);
     }
 }
 

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Registro.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20230203012546_Inicial")]
+    [Migration("20230225200350_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -77,7 +77,7 @@ namespace Registro.Migrations
                     b.ToTable("Personas");
                 });
 
-            modelBuilder.Entity("Prestamos", b =>
+            modelBuilder.Entity("Prestamo", b =>
                 {
                     b.Property<int>("PrestamoId")
                         .ValueGeneratedOnAdd()

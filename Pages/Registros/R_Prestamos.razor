@@ -4,6 +4,7 @@
 @inject PrestamosBLL prestamosBll
 @inject PersonasBLL personasBll
 @inject OcupacionesBLL ocupacionesBll
+@inject NotificationService notifierSvc
 
 <EditForm Model="prestamos" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
@@ -93,6 +94,7 @@
     public Prestamo prestamos {get; set;} = new Prestamo(); 
     public Ocupaciones ocupacion { get; set; } = new Ocupaciones();
     public List<Persona> listaPersonas = new List<Persona>();
+    public String mensaje { get; set; } = "";
     
     protected override void OnInitialized()
     {
@@ -106,33 +108,92 @@
 
     private void Buscar()
     {
-        if (prestamos.PrestamoId > 0 || ocupacion.OcupacionId > 0)
+        if (prestamos.PrestamoId > 0)
         {
             var encontrado = prestamosBll.Buscar(prestamos.PrestamoId);
             if (encontrado != null)
             {
                 this.prestamos = encontrado;
-               
+                ShowNotification(
+                new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = "Se encontraron los datos correctamente"
+                });
+            }
+            else{
+                ShowNotification(
+                new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Warning,
+                    Summary = "Registro no encontrado"
+                });
             }
         }
     }
 
     public void Nuevo()
     {
+        mensaje = "";
         prestamos = new Prestamo();
         prestamos.Fecha = DateTime.Now;
         prestamos.Vence = DateTime.Now;
-        
+        ShowNotification(
+        new NotificationMessage
+        {
+            Severity = NotificationSeverity.Success,
+            Summary = "Nueva plantilla creada correctamente"
+        });
     }
 
 
     public void Guardar()
     {
-        var guardo = prestamosBll.Guardar(prestamos);
+        var guardo = prestamosBll.Guardar(this.prestamos);
         if (guardo)
         {
             Nuevo();
-            
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Guardado correctamente"
+            });
+        }
+        else
+        {
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "No fue guardado, intentar nuevamente."
+            });
+           
+        }
+    }
+
+    public void Editar()
+    {
+        var editar = prestamosBll.Editar(prestamos);
+
+        if (editar)
+        {
+            Nuevo();
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Editado correctamente"
+            });
+        }
+        else
+        {
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "No fue editado, intentar nuevamente."
+            });
         }
     }
 
@@ -142,8 +203,26 @@
         if (elimino)
         {
             Nuevo();
-            
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Eliminado correctamente"
+            });
         }
-
+        else
+        {
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "No fue eliminado, intentar nuevamente."
+            });
+        }
+    }
+    
+    void ShowNotification(NotificationMessage message)
+    {
+        notifierSvc.Notify(message);
     }
 }

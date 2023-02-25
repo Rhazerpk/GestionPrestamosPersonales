@@ -3,6 +3,7 @@
 
 @inject PersonasBLL personasBll
 @inject OcupacionesBLL ocupacionesBll
+@inject NotificationService notifierSvc
 
 <EditForm Model="personas" OnValidSubmit="Guardar">
 
@@ -98,6 +99,7 @@
     public int OcupacionId { get; set; }
     public Ocupaciones ocupacion { get; set; } = new Ocupaciones();
     public List<Ocupaciones> lista = new List<Ocupaciones>();
+     public String mensaje { get; set; } = "";
     
     protected override void OnInitialized()
     {
@@ -118,13 +120,33 @@
 
             if (encontrado != null)
                 this.personas = encontrado;
-        } 
- 
-    }
+                ShowNotification(
+                new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = "Se encontraron los datos correctamente"
+                });
+            }
+            else{
+                ShowNotification(
+                new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Warning,
+                    Summary = "Registro no encontrado"
+                });
+            }
+        }
 
     public void Nuevo()
     {
+        mensaje = "";
         this.personas = new Persona();
+        ShowNotification(
+        new NotificationMessage
+        {
+            Severity = NotificationSeverity.Success,
+            Summary = "Nueva plantilla creada correctamente"
+        });
     }
 
     public void Guardar()
@@ -134,11 +156,22 @@
         if (guardado)
         {
             Nuevo();
-            
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Guardado correctamente"
+            });
         }
         else
         {
-            
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "No fue guardado, intentar nuevamente."
+            });
+           
         }
     }
 
@@ -148,9 +181,25 @@
         if (elimino)
         {
             Nuevo();
-            
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Eliminado correctamente"
+            });
         }
-
+        else
+        {
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "No fue eliminado, intentar nuevamente."
+            });
+        }
     }
-
+    void ShowNotification(NotificationMessage message)
+    {
+        notifierSvc.Notify(message);
+    }
 }

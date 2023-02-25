@@ -74,7 +74,7 @@ namespace Registro.Migrations
                     b.ToTable("Personas");
                 });
 
-            modelBuilder.Entity("Prestamos", b =>
+            modelBuilder.Entity("Prestamo", b =>
                 {
                     b.Property<int>("PrestamoId")
                         .ValueGeneratedOnAdd()

@@ -20,6 +20,13 @@ public class PersonasBLL{
         _contexto.Personas.Add(persona);
         return _contexto.SaveChanges() > 0;
     }
+    public bool Editar(Persona persona)
+    {
+        if (!Existe(persona.PersonaId))
+            return this.Insertar(persona);
+        else
+            return this.Modificar(persona);
+    }
 
     private bool Modificar(Persona persona)
     {

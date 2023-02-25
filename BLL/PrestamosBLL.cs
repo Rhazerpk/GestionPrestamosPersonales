@@ -19,7 +19,13 @@ public class PrestamosBLL{
         _contexto.Prestamos.Add(prestamos);
         return _contexto.SaveChanges() > 0;
     }
-
+    public bool Editar(Prestamo prestamos)
+    {
+        if (!Existe(prestamos.PrestamoId))
+            return this.Insertar(prestamos);
+        else
+            return this.Modificar(prestamos);
+    }
     private bool Modificar(Prestamo prestamos)
     {
         _contexto.Entry(prestamos).State = EntityState.Modified;
