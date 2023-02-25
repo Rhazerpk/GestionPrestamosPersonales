@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Registro.Data;
 using Microsoft.EntityFrameworkCore;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ IServiceCollection serviceCollection = builder.Services.AddDbContext<Contexto>(o
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<OcupacionesBLL>();
 var app = builder.Build();
 

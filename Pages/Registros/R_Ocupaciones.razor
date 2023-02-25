@@ -1,6 +1,7 @@
 ﻿@page "/ocupacion"
 @page "/ocupacion/{OcupacionId:int}"
 @inject OcupacionesBLL ocupacionesBll
+@inject NotificationService notificationService
 
 <EditForm Model="ocupacion" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
@@ -44,7 +45,7 @@
 
     public int OcupacionId { get; set; }
     public Ocupaciones ocupacion { get; set; } = new Ocupaciones();
-    
+    public String mensaje { get; set; } = "";
 
     protected override void OnInitialized()
     {
@@ -61,13 +62,26 @@
 
         if(ocupacionEncontrada != null)
         {
-            this.ocupacion = ocupacionEncontrada;
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Se encontraron los datos correctamente"
+            });
         }
     }
 
     public void Nuevo()
     {
-        this.ocupacion = new Ocupaciones();
+        mensaje = "";
+        ocupacion = new Ocupaciones();
+
+        ShowNotification(
+        new NotificationMessage
+        {
+            Severity = NotificationSeverity.Success,
+            Summary = "Nueva plantilla creada correctamente"
+        });
     }
 
     public void Guardar()
@@ -76,11 +90,13 @@
 
         if (guardado)
         {
-            Nuevo();
-            
-        }
-        else
-        {
+           Nuevo();
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Guardado correctamente"
+            });
             
         }
     }
@@ -91,9 +107,35 @@
 
         if (eliminado)
         {
-            Nuevo();   
+            Nuevo();
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Eliminado correctamente"
+            });
         }
 
+    }
+    public void Editar()
+    {
+        var editar = ocupacionesBll.Editar(ocupacion);
+
+        if(editar)
+        {
+            Nuevo();
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Editado correctamente"
+            });
+        }
+    }
+
+    void ShowNotification(NotificationMessage message)
+    {
+        notificationService.Notify(message);
     }
 }
 

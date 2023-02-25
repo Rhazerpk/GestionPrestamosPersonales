@@ -27,6 +27,12 @@ public class OcupacionesBLL{
         return _contexto.SaveChanges() > 0;
 
     }
+    public bool Editar(Ocupaciones ocupacion){
+            if (!Existe(ocupacion.OcupacionId))
+                return this.Insertar(ocupacion);
+            else
+                return this.Modificar(ocupacion);
+        }
 
     public bool Guardar(Ocupaciones ocupacion)
     {
