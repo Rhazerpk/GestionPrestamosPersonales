@@ -10,25 +10,24 @@
         </div>
 
         <div class="card-body">
-            <form>
+        <form>
                 <div class="form-group text-center">
 
                    <button type="button" class="bi bi-file-earmark-person btn btn-lg btn-primary" @onclick="Buscar"> Generar Tabla Personas</button>
 
                 </div>
-                <div class="col-md-6">
+                <div class="row gy-3">
+                    <div class="col-md-6">
                         <label>Filtro</label>
                         <select class="form-control" @bind="Filtro">
                             <option value="0"></option>
-                            <option value="1">PersonaId</option>
-                            <option value="2">Nombre</option>
-                            <option value="3">OcupacionId</option>
+                            <option value="1">OcupacionId</option>
+                            <option value="2">Descripcion</option>
                         </select>
                     </div>
-
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Buscar</label>
+                            <label>Criterio</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" @bind="Criterio" />
                                 <div class="input-group-append">
@@ -37,8 +36,9 @@
                             </div>
                         </div>
                     </div>
-            </form>
-        </div>
+                </div>
+        </form>
+    </div>
         
         <table class="table table-secondary">
             <thead class="thead-dark">

@@ -106,6 +106,13 @@
                         <InputNumber class="form-control" @bind-Value="detalle.ValorPagado"></InputNumber>
                         <ValidationMessage For="@(() => detalle.ValorPagado)"></ValidationMessage>
                     </div>
+
+                    <div class="col-md-2">
+                        <br>
+                        <button type="button" class="btn btn-primary input-group-text" @onclick="AgregarDetalle">
+                            <span class="oi oi-plus">Agregar</span>
+                        </button>
+                    </div>
                    
                     <table class="card-header text-center">
                         <thead class="thead">
