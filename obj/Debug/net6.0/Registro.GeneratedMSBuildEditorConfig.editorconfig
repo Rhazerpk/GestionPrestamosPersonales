@@ -5,88 +5,89 @@ build_property.UsingMicrosoftNETSdkWeb = true
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Registro
 build_property.RootNamespace = Registro
-build_property.ProjectDir = C:\Users\elpri\OneDrive\Desktop\Progamacion aplicada I\Registro\
+build_property.ProjectDir = c:\Users\elpri\OneDrive\Desktop\Progamacion aplicada I\Registro\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\elpri\OneDrive\Desktop\Progamacion aplicada I\Registro
+build_property.MSBuildProjectDirectory = c:\Users\elpri\OneDrive\Desktop\Progamacion aplicada I\Registro
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/App.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Consultas/C_Ocupaciones.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Consultas/C_Ocupaciones.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uc3VsdGFzXENfT2N1cGFjaW9uZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Consultas/C_pagos.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Consultas/C_pagos.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uc3VsdGFzXENfcGFnb3MucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Consultas/C_Personas.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Consultas/C_Personas.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uc3VsdGFzXENfUGVyc29uYXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Consultas/C_Prestamos.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Consultas/C_Prestamos.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uc3VsdGFzXENfUHJlc3RhbW9zLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Counter.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/FetchData.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/FetchData.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Index.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Registros/R_Ocupaciones.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Registros/R_Ocupaciones.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cm9zXFJfT2N1cGFjaW9uZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Registros/R_pagos.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Registros/R_pagos.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cm9zXFJfcGFnb3MucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Registros/R_Persona.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Registros/R_Persona.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cm9zXFJfUGVyc29uYS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Registros/R_Prestamos.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Registros/R_Prestamos.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cm9zXFJfUHJlc3RhbW9zLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Shared/SurveyPrompt.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/_Imports.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Shared/MainLayout.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-z4t509ecvg
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Shared/NavMenu.razor]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-zp3bgbe86f
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Error.cshtml]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/_Host.cshtml]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/_Host.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/_Layout.cshtml]
+[c:/Users/elpri/OneDrive/Desktop/Progamacion aplicada I/Registro/Pages/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
