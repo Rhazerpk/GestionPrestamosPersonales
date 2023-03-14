@@ -1,32 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\elpri\\OneDrive\\Desktop\\Progamacion aplicada I\\Registro\\Registro.csproj": {}
+    "C:\\Users\\elpri\\OneDrive\\Desktop\\Progamacion aplicada I\\Registro-Complete\\Registro.csproj": {}
   },
   "projects": {
-    "C:\\Users\\elpri\\OneDrive\\Desktop\\Progamacion aplicada I\\Registro\\Registro.csproj": {
+    "C:\\Users\\elpri\\OneDrive\\Desktop\\Progamacion aplicada I\\Registro-Complete\\Registro.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\elpri\\OneDrive\\Desktop\\Progamacion aplicada I\\Registro\\Registro.csproj",
+        "projectUniqueName": "C:\\Users\\elpri\\OneDrive\\Desktop\\Progamacion aplicada I\\Registro-Complete\\Registro.csproj",
         "projectName": "Registro",
-        "projectPath": "C:\\Users\\elpri\\OneDrive\\Desktop\\Progamacion aplicada I\\Registro\\Registro.csproj",
+        "projectPath": "C:\\Users\\elpri\\OneDrive\\Desktop\\Progamacion aplicada I\\Registro-Complete\\Registro.csproj",
         "packagesPath": "C:\\Users\\elpri\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\elpri\\OneDrive\\Desktop\\Progamacion aplicada I\\Registro\\obj\\",
+        "outputPath": "C:\\Users\\elpri\\OneDrive\\Desktop\\Progamacion aplicada I\\Registro-Complete\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\elpri\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\elpri\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
+          "net7.0": {
+            "targetAlias": "net7.0",
             "projectReferences": {}
           }
         },
@@ -37,8 +35,8 @@
         }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net7.0": {
+          "targetAlias": "net7.0",
           "dependencies": {
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
@@ -52,7 +50,7 @@
             },
             "Radzen.Blazor": {
               "target": "Package",
-              "version": "[4.7.2, )"
+              "version": "[4.7.9, )"
             }
           },
           "imports": [
@@ -74,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

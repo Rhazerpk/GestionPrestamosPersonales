@@ -48,7 +48,7 @@
 
     public int OcupacionId { get; set; }
     public Ocupaciones ocupacion { get; set; } = new Ocupaciones();
-    public String mensaje { get; set; } = "";
+    
     
    protected async override Task OnInitializedAsync()
     {
@@ -61,44 +61,25 @@
 
     private async Task Buscar()
     {
-         if (ocupacion.OcupacionId > 0)
+        if (ocupacion.OcupacionId > 0)
         {
             var encontrado = await ocupacionesBll.Buscar(ocupacion.OcupacionId);
-            if (encontrado != null){
+            if (encontrado != null)
+            {
                 this.ocupacion = encontrado;
-
-                ShowNotification(
-                new NotificationMessage
-                {
-                    Severity = NotificationSeverity.Success,
-                    Summary = "Se encontraron los datos correctamente"
-                });
+                notifierSvc.ShowNotification("Registro encontrado", NotificationSeverity.Success);
             }
-
             else
             {
-                ShowNotification(
-                new NotificationMessage
-                {
-                    Severity = NotificationSeverity.Warning,
-                    Summary = "Registro no encontrado"
-                });
+                notifierSvc.ShowNotification("Registro no encontrado", NotificationSeverity.Warning);
             }
         }
     }
 
     public void Nuevo()
     {
-        mensaje = "";
         ocupacion = new Ocupaciones();
-        
-        ShowNotification(
-        new NotificationMessage
-        {
-            Severity = NotificationSeverity.Success,
-            Summary = "Nueva plantilla creada correctamente"
-        });
-
+        notifierSvc.ShowNotification("Nueva plantilla creada correctamente.", NotificationSeverity.Success);
     }
 
     public async Task Guardar()
@@ -108,23 +89,11 @@
         if (guardo)
         {
             Nuevo();
-            
-            ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Success,
-                Summary = "Guardado correctamente"
-            });
+            notifierSvc.ShowNotification("Fue guardado correctamente.");
         }
         else
         {
-            ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "No fue guardado, intentar nuevamente."
-            });
-           
+            notifierSvc.ShowNotification("No fue guardado, intentar nuevamente.", NotificationSeverity.Error);
         }
     }
 
@@ -135,52 +104,27 @@
         if (editar)
         {
             Nuevo();
-            ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Success,
-                Summary = "Editado correctamente"
-            });
+            notifierSvc.ShowNotification("Fue editado correctamente.");
         }
         else
         {
-            ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "No fue editado, intentar nuevamente."
-            });
+            notifierSvc.ShowNotification("No fue editado, intentar nuevamente.", NotificationSeverity.Error);
         }
     }
     public async Task Eliminar()
     {
-        var elimino = await ocupacionesBll.Eliminar(ocupacion);
 
+        bool elimino = await ocupacionesBll.Eliminar(ocupacion);
         if (elimino)
         {
             Nuevo();
-
-            ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Success,
-                Summary = "Eliminado correctamente"
-            });
+            notifierSvc.ShowNotification("Fue eliminado correctamente.");
         }
-
         else
         {
-            ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "No fue eliminado, intentar nuevamente."
-            });
+            notifierSvc.ShowNotification("No fue eliminado, intentar nuevamente.", NotificationSeverity.Error);
         }
        
     }
-    void ShowNotification(NotificationMessage message)
-    {
-        notifierSvc.Notify(message);
-    }
+
 }

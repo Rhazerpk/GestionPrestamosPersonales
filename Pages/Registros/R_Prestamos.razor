@@ -100,7 +100,6 @@
     public Prestamo prestamos {get; set;} = new Prestamo(); 
     public Ocupaciones ocupacion { get; set; } = new Ocupaciones();
     public List<Persona> listaPersonas = new List<Persona>();
-    public String mensaje { get; set; } = "";
     
     protected async override Task OnInitializedAsync()
     {
@@ -120,38 +119,19 @@
             if (encontrado != null)
             {
                 this.prestamos = encontrado;
-
-                ShowNotification(
-                new NotificationMessage
-                {
-                    Severity = NotificationSeverity.Success,
-                    Summary = "Se encontraron los datos correctamente"
-                });
+                notifierSvc.ShowNotification("Registro encontrado", NotificationSeverity.Success);
             }
-
             else
             {
-                ShowNotification(
-                new NotificationMessage
-                {
-                    Severity = NotificationSeverity.Warning,
-                    Summary = "Registro no encontrado"
-                });
+                notifierSvc.ShowNotification("Registro no encontrado", NotificationSeverity.Error);
             }
         }
     }
 
     public void Nuevo()
     {
-        mensaje = "";
         prestamos = new Prestamo();
-
-        ShowNotification(
-        new NotificationMessage
-        {
-            Severity = NotificationSeverity.Success,
-            Summary = "Nueva plantilla creada correctamente"
-        });
+        notifierSvc.ShowNotification("Nueva plantilla creada correctamente.", NotificationSeverity.Success);
        
     }
 
@@ -162,23 +142,11 @@
         if (guardo)
         {
             Nuevo();
-
-            ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Success,
-                Summary = "Guardado correctamente"
-            });
+            notifierSvc.ShowNotification("Fue guardado correctamente.");
         }
         else
         {
-            ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "No fue guardado, intentar nuevamente."
-            });
-           
+            notifierSvc.ShowNotification("No fue guardado, intentar nuevamente.", NotificationSeverity.Error);
         }
     }
 
@@ -189,22 +157,11 @@
         if (editar)
         {
             Nuevo();
-
-            ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Success,
-                Summary = "Editado correctamente"
-            });
+            notifierSvc.ShowNotification("Fue editado correctamente", NotificationSeverity.Success);
         }
         else
         {
-            ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "No fue editado, intentar nuevamente."
-            });
+            notifierSvc.ShowNotification("Registro no encontrado", NotificationSeverity.Warning);
         }
     }
 
@@ -214,28 +171,12 @@
         if (elimino)
         {
             Nuevo();
-           
-            ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Success,
-                Summary = "Eliminado correctamente"
-            });
+            notifierSvc.ShowNotification("Fue eliminado correctamente.", NotificationSeverity.Success);
         }
-
         else
         {
-            ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "No fue eliminado, intentar nuevamente."
-            });
+            notifierSvc.ShowNotification("No fue Eliminado, intentar nuevamente.", NotificationSeverity.Error);
         }
     }
     
-    void ShowNotification(NotificationMessage message)
-    {
-        notifierSvc.Notify(message);
-    }
 }
