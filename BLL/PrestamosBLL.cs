@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class PrestamosBLL{
 
+    #nullable disable
     private Contexto _contexto;
     public PrestamosBLL(Contexto contexto)
     {
@@ -24,14 +25,17 @@ public class PrestamosBLL{
 
     public async Task<bool> Eliminar(Prestamo prestamos)
     {
+
     var personas = await _contexto.Personas.FindAsync(prestamos.PersonaId);
     personas.Balance -= prestamos.Monto;
 
     _contexto.Entry(prestamos).State = EntityState.Deleted;
     return await _contexto.SaveChangesAsync() > 0;
+    
     }
     public async Task<bool> Insertar(Prestamo prestamos)
     {
+
     await _contexto.Prestamos.AddAsync(prestamos);
     
     var persona = await _contexto.Personas.FindAsync(prestamos.PersonaId);
@@ -69,7 +73,7 @@ public class PrestamosBLL{
         return await _contexto.SaveChangesAsync() > 0;
     }
 
-    public async Task<Prestamo?> Buscar(int PrestamoId)
+    public async Task<Prestamo> Buscar(int PrestamoId)
     {
         return await _contexto.Prestamos
         .Where(o => o.PrestamoId == PrestamoId)

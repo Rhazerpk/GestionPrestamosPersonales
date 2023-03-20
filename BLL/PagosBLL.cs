@@ -48,7 +48,7 @@ public class PagosBLL{
 
         }
 
-        await _contexto.Database.ExecuteSqlRawAsync($"Delete from PagosDetalle Where PagoId = {pagoActual.PagoId}");
+        await _contexto.Database.ExecuteSqlRawAsync($"Delete from PagosDetalles Where PagoId = {pagoActual.PagoId}");
 
         foreach (var item in pagoActual.PagosDetalles)
         {

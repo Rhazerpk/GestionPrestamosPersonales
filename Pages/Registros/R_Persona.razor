@@ -81,9 +81,9 @@
 
         <div class="card-footer d-flex justify-content-center">
              <div class="border border-3 btn-group" role="group">
-                <button type="button" class="bi bi-file-earmark-fill btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
-                <button type="submit" class="bi bi-file-earmark-text-fill btn btn-lg btn-success">Guardar</button>
-                <button type="button" class="bi bi-trash btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
+                <button type="button" class="btn btn-primary" @onclick="Nuevo"> <i class="oi oi-file" /> Nuevo</button>
+                <button type="submit" class="btn btn-success"><i class="oi oi-document" /> Guardar</button>
+                <button type="button" class="btn btn-danger" @onclick="Eliminar"><i class="oi oi-trash" />Eliminar</button>
             </div>
 
         </div>
@@ -115,7 +115,8 @@
          if (personas.PersonaId > 0)
         {
             var encontrado = await personasBll.Buscar(personas.PersonaId);
-            if (encontrado != null){
+            if (encontrado != null)
+            {
                 this.personas = encontrado;
                 notifierSvc.ShowNotification("Registro encontrado", NotificationSeverity.Success);
             }
@@ -158,9 +159,7 @@
         }
         else
         {
-
             notifierSvc.ShowNotification("No fue editado correctamente", NotificationSeverity.Error);
-
         }
     }
     public async Task Eliminar()
