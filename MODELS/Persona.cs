@@ -16,7 +16,7 @@ public class Persona
     public string? Email {get; set;}
     [Required(ErrorMessage = "La dirección es requerido")]
     public string? Direccion {get; set;}
-    public DateTime? FechaNacimiento {get; set;}
+    public DateOnly? FechaNacimiento {get; set;}
     public int OcupacionId {get; set;}
     [Required(ErrorMessage = "El balance es requerido")]
     public double Balance {get;set;}
