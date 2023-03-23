@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 public class PagosBLL{
 
     private Contexto _contexto;
+    
     public PagosBLL(Contexto contexto)
     {
         _contexto = contexto;

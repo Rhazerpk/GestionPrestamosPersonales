@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 public class PersonasBLL{
 
     private Contexto _contexto;
+    
     public PersonasBLL(Contexto contexto)
     {
         _contexto = contexto;

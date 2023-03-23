@@ -14,7 +14,7 @@ namespace Registro.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
 
             modelBuilder.Entity("Ocupaciones", b =>
                 {
@@ -101,7 +101,7 @@ namespace Registro.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("FechaNacimiento")
+                    b.Property<DateOnly?>("FechaNacimiento")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nombres")

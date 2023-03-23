@@ -5,6 +5,7 @@ public class PrestamosBLL{
 
     #nullable disable
     private Contexto _contexto;
+    
     public PrestamosBLL(Contexto contexto)
     {
         _contexto = contexto;

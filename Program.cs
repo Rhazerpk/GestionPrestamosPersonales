@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Registro.Data;
 using Microsoft.EntityFrameworkCore;
 using Radzen;
 

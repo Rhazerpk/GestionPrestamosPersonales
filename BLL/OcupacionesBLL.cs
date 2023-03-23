@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 public class OcupacionesBLL{
 
     private Contexto _contexto;
+    
     public OcupacionesBLL(Contexto contexto)
     {
         _contexto = contexto;
@@ -43,8 +44,16 @@ public class OcupacionesBLL{
 
     public async Task<bool> Eliminar(Ocupaciones ocupacion){
 
-        _contexto.Entry(ocupacion).State = EntityState.Deleted;
-        return await _contexto.SaveChangesAsync() > 0;
+        try
+        {
+             _contexto.Entry(ocupacion).State = EntityState.Deleted;
+            return await _contexto.SaveChangesAsync() > 0;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+       
 
     }
 
